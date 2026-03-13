@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>San Cayetano – App para entrenadores | Nano Peral</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="San Cayetano es la app creada por Nano Peral para que entrenadores gestionen sus entrenamientos de forma moderna, clara y profesional."
+  />
+
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-elevated: #0b1020;
+      --accent: #4f46e5;
+      --accent-soft: rgba(79, 70, 229, 0.12);
+      --accent-strong: #6366f1;
+      --text-main: #f9fafb;
+      --text-soft: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.35);
+      --danger: #f97373;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.55);
+      --shadow-subtle: 0 10px 30px rgba(15, 23, 42, 0.45);
+      --blur-strong: blur(22px);
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      background: radial-gradient(circle at 0% 0%, #111827 0, #020617 35%, #020617 100%);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Inter", Segoe UI, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      padding: 24px 16px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page-inner {
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
+    /* NAV */
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 40%;
+      background: radial-gradient(circle at 0 0, #6366f1 0, #4c1d95 28%, #020617 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.6),
+        0 18px 35px rgba(30, 64, 175, 0.7);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      font-size: 0.8rem;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .logo-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .logo-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .nav-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.25), transparent 70%);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+    }
+
+    .nav-link-ghost {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+
+    .nav-link-ghost:hover {
+      border-color: rgba(148, 163, 184, 0.6);
+      color: #e5e7eb;
+    }
+
+    /* LAYOUT */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    /* HERO – LEFT */
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: rgba(15, 23, 42, 0.7);
+      box-shadow: 0 12px 25px rgba(15, 23, 42, 0.8);
+      font-size: 0.76rem;
+      color: var(--text-soft);
+      margin-bottom: 16px;
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .pill-span {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(79, 70, 229, 0.16);
+      color: #e5e7eb;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 3.4vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 14px;
+    }
+
+    .hero-title span {
+      color: var(--accent-strong);
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-soft);
+      max-width: 32rem;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    .hero-subtitle strong {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+
+    .hero-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      margin-bottom: 26px;
+      font-size: 0.85rem;
+      color: #d1d5db;
+    }
+
+    .hero-highlight {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .hero-highlight-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      color: var(--accent-strong);
+      flex-shrink: 0;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: white;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(79, 70, 229, 0.6);
+      transition: transform 130ms ease, box-shadow 130ms ease, opacity 130ms ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 22px 45px rgba(79, 70, 229, 0.75);
+      opacity: 0.98;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.7);
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 130ms ease, border-color 130ms ease, color 130ms ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(15, 23, 42, 0.95);
+      border-color: rgba(209, 213, 219, 0.9);
+      color: #f9fafb;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-top: 4px;
+    }
+
+    /* HERO – RIGHT (PANEL) */
+
+    .panel {
+      position: relative;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.45), transparent 55%),
+        linear-gradient(to bottom right, rgba(15, 23, 42, 0.94), rgba(3, 7, 18, 0.98));
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .panel-glow {
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 10% 0%, rgba(99, 102, 241, 0.15), transparent 55%),
+        radial-gradient(circle at 110% 60%, rgba(236, 72, 153, 0.12), transparent 60%);
+      filter: var(--blur-strong);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .panel-tabs {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .panel-tab {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      color: #9ca3af;
+      cursor: default;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .panel-tab.active {
+      background: rgba(15, 23, 42, 0.96);
+      color: #e5e7eb;
+    }
+
+    .panel-status {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+    }
+
+    .panel-body {
+      border-radius: var(--radius-lg);
+      background: rgba(15, 23, 42, 0.94);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 14px 14px 10px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 14px;
+    }
+
+    .panel-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .panel-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #9ca3af;
+    }
+
+    .panel-meta-pill {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: #e5e7eb;
+    }
+
+    .session-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .session-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 8px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.18), transparent 60%);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .session-main {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .session-name {
+      font-size: 0.85rem;
+    }
+
+    .session-meta {
+      font-size: 0.73rem;
+      color: #9ca3af;
+    }
+
+    .session-chip-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .chip-soft {
+      background: rgba(15, 23, 42, 0.85);
+      color: #9ca3af;
+    }
+
+    .session-status-pill {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(22, 163, 74, 0.12);
+      color: #bbf7d0;
+      border: 1px solid rgba(34, 197, 94, 0.5);
+    }
+
+    .session-status-pill.pending {
+      background: rgba(55, 65, 81, 0.6);
+      color: #e5e7eb;
+      border-color: rgba(148, 163, 184, 0.7);
+    }
+
+    .session-status-pill.risk {
+      background: rgba(248, 113, 113, 0.12);
+      color: #fecaca;
+      border-color: rgba(248, 113, 113, 0.6);
+    }
+
+    .panel-detail {
+      border-radius: 12px;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.1), transparent 70%);
+      padding: 10px 10px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .panel-detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .badge-small {
+      font-size: 0.68rem;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: #cbd5f5;
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .detail-title {
+      font-size: 0.85rem;
+    }
+
+    .detail-meta {
+      font-size: 0.72rem;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: #e5e7eb;
+    }
+
+    .tag-soft {
+      background: rgba(15, 23, 42, 0.85);
+      color: #9ca3af;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .metric {
+      border-radius: 9px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 5px 7px;
+    }
+
+    .metric-label {
+      font-size: 0.68rem;
+      color: #9ca3af;
+      margin-bottom: 2px;
+    }
+
+    .metric-value {
+      font-size: 0.9rem;
+    }
+
+    .metric-value.alert {
+      color: var(--danger);
+    }
+
+    /* SECTION – FEATURES */
+
+    .section {
+      margin-bottom: 36px;
+    }
+
+    .section-header {
+      margin-bottom: 16px;
+    }
+
+    .section-kicker {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .section-description {
+      font-size: 0.96rem;
+      color: var(--text-soft);
+      max-width: 40rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      border-radius: var(--radius-lg);
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 14px 14px 12px;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.7);
+    }
+
+    .feature-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: var(--accent-strong);
+      margin-bottom: 8px;
+    }
+
+    .feature-title {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .feature-text {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    /* SECTION – HOW IT WORKS */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 6px;
+    }
+
+    .step {
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 12px 12px 10px;
+    }
+
+    .step-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #e5e7eb;
+      margin-bottom: 7px;
+    }
+
+    .step-title {
+      font-size: 0.98rem;
+      margin-bottom: 4px;
+    }
+
+    .step-text {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    /* SECTION – AUDIENCE */
+
+    .audience {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 22px;
+      align-items: flex-start;
+    }
+
+    .audience-list {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 12px 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .audience-item {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      display: flex;
+      gap: 8px;
+    }
+
+    .audience-bullet {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .audience-note {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(148, 163, 184, 0.65);
+      padding: 12px 12px 10px;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* SECTION – FINAL CTA */
+
+    .cta-final {
+      border-radius: 26px;
+      padding: 18px 16px 16px;
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.35), transparent 60%),
+        linear-gradient(to right, rgba(15, 23, 42, 0.96), rgba(5, 6, 20, 0.98));
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .cta-final-text {
+      max-width: 30rem;
+    }
+
+    .cta-final-title {
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .cta-final-sub {
+      font-size: 0.92rem;
+      color: #e5e7eb;
+    }
+
+    .cta-final-note {
+      font-size: 0.8rem;
+      color: #cbd5f5;
+      margin-top: 4px;
+    }
+
+    /* FOOTER */
+
+    .footer {
+      margin-top: 26px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(31, 41, 55, 0.9);
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .footer a {
+      color: #9ca3af;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .panel {
+        order: -1;
+      }
+
+      .nav-right {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page {
+        padding: 20px 14px 28px;
+      }
+
+      .hero {
+        gap: 26px;
+        margin-bottom: 32px;
+      }
+
+      .grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .steps {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .audience {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .cta-final {
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-cta-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="page-inner">
+      <!-- NAV -->
+      <header class="nav">
+        <div class="nav-left">
+          <div class="logo-badge">SC</div>
+          <div class="logo-text">
+            <div class="logo-title">San Cayetano</div>
+            <div class="logo-subtitle">App de seguimiento por Nano Peral</div>
+          </div>
+        </div>
+        <div class="nav-right">
+          <div class="nav-tag">
+            <span class="nav-dot"></span>
+            <span>Creada por Nano Peral</span>
+          </div>
+          <button
+            class="nav-link-ghost"
+            onclick="document.getElementById('como-funciona').scrollIntoView({behavior:'smooth'})"
+          >
+            Cómo funciona
+          </button>
+        </div>
+      </header>
+
+      <!-- HERO -->
+      <main class="hero">
+        <!-- HERO LEFT -->
+        <section>
+          <div class="hero-badge">
+            <span class="pill-dot"></span>
+            <span>Seguimiento de entrenamientos sin fricción</span>
+            <span class="pill-span">Para entrenadores</span>
+          </div>
+
+          <h1 class="hero-title">
+            El cuaderno <span>inteligente</span> de tus entrenamientos.
+          </h1>
+
+          <p class="hero-subtitle">
+            San Cayetano transforma tus planificaciones en una experiencia digital
+            clara, elegante y profesional para cada deportista, sin que pierdas tu
+            manera de entrenar.
+          </p>
+
+          <div class="hero-highlights">
+            <div class="hero-highlight">
+              <div class="hero-highlight-icon">◆</div>
+              <div>
+                Centraliza todos tus planes y sesiones en un solo lugar, accesible
+                desde cualquier dispositivo.
+              </div>
+            </div>
+            <div class="hero-highlight">
+              <div class="hero-highlight-icon">◆</div>
+              <div>
+                Reduce tiempo de gestión y gana espacio para hacer lo que mejor
+                sabes: entrenar personas.
+              </div>
+            </div>
+            <div class="hero-highlight">
+              <div class="hero-highlight-icon">◆</div>
+              <div>
+                Entrega una imagen moderna que refuerza tu marca como entrenador
+                desde el primer contacto.
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-cta-row">
+            <a
+              href="https://seguimiento-bice.vercel.app/"
+              class="btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Probar San Cayetano ahora
+            </a>
+
+            <button
+              class="btn-secondary"
+              onclick="document.getElementById('vista-atleta').scrollIntoView({behavior:'smooth'})"
+            >
+              Ver cómo lo ve tu deportista
+            </button>
+          </div>
+
+          <p class="hero-note">
+            Acceso directo a la app creada por Nano Peral para entrenadores que
+            cuidan el detalle.
+          </p>
+        </section>
+
+        <!-- HERO RIGHT: PANEL PREVIEW -->
+        <aside class="panel" aria-label="Vista previa San Cayetano">
+          <div class="panel-glow"></div>
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div class="panel-tabs">
+                <div class="panel-tab active">
+                  Semana actual
+                </div>
+                <div class="panel-tab">
+                  Historial
+                </div>
+              </div>
+              <div class="panel-status">
+                <span class="status-dot"></span>
+                Seguimiento activo
+              </div>
+            </div>
+
+            <div class="panel-body" id="vista-atleta">
+              <!-- Lista sesiones -->
+              <div>
+                <div class="panel-list-header">
+                  <div class="panel-title">Sesiones</div>
+                  <div class="panel-meta-pill">4/5 completadas</div>
+                </div>
+                <div class="session-list">
+                  <div class="session-item">
+                    <div class="session-main">
+                      <div class="session-name">Fuerza tren inferior</div>
+                      <div class="session-meta">Lunes · 70' · RPE 7</div>
+                      <div class="session-chip-row">
+                        <span class="chip">Sentadilla</span>
+                        <span class="chip chip-soft">Peso muerto</span>
+                      </div>
+                    </div>
+                    <div class="session-status-pill">
+                      Completada
+                    </div>
+                  </div>
+
+                  <div class="session-item">
+                    <div class="session-main">
+                      <div class="session-name">Potencia + técnica</div>
+                      <div class="session-meta">Miércoles · 55' · RPE 6</div>
+                      <div class="session-chip-row">
+                        <span class="chip">Pliometría</span>
+                        <span class="chip chip-soft">Trabajo técnico</span>
+                      </div>
+                    </div>
+                    <div class="session-status-pill">
+                      Completada
+                    </div>
+                  </div>
+
+                  <div class="session-item">
+                    <div class="session-main">
+                      <div class="session-name">Fuerza tren superior</div>
+                      <div class="session-meta">Viernes · 60' · RPE 7</div>
+                      <div class="session-chip-row">
+                        <span class="chip">Press banca</span>
+                        <span class="chip chip-soft">Dominadas</span>
+                      </div>
+                    </div>
+                    <div class="session-status-pill pending">
+                      Hoy
+                    </div>
+                  </div>
+
+                  <div class="session-item">
+                    <div class="session-main">
+                      <div class="session-name">Regenerativo + movilidad</div>
+                      <div class="session-meta">Domingo · 30' · RPE 3</div>
+                      <div class="session-chip-row">
+                        <span class="chip chip-soft">Opcional</span>
+                      </div>
+                    </div>
+                    <div class="session-status-pill risk">
+                      Ajustar carga
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Detalle sesión -->
+              <div class="panel-detail">
+                <div class="panel-detail-header">
+                  <div>
+                    <div class="badge-small">Vista atleta</div>
+                    <div class="detail-title">Fuerza tren superior</div>
+                    <div class="detail-meta">
+                      Series, cargas y sensaciones en un mismo vistazo.
+                    </div>
+                  </div>
+                  <div class="badge-small">
+                    RPE objetivo 7
+                  </div>
+                </div>
+
+                <div class="tag-row">
+                  <span class="tag">Press banca 4×6</span>
+                  <span class="tag">Dominadas lastradas</span>
+                  <span class="tag tag-soft">Row con mancuerna</span>
+                </div>
+
+                <div class="metric-row">
+                  <div class="metric">
+                    <div class="metric-label">Carga semanal</div>
+                    <div class="metric-value">+6 %</div>
+                  </div>
+                  <div class="metric">
+                    <div class="metric-label">Adherencia</div>
+                    <div class="metric-value">92 %</div>
+                  </div>
+                  <div class="metric">
+                    <div class="metric-label">Fatiga</div>
+                    <div class="metric-value alert">Alta</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </main>
+
+      <!-- SECTION: PENSADA PARA ENTRENADORES -->
+      <section class="section">
+        <div class="section-header">
+          <div class="section-kicker">Pensada para entrenadores exigentes</div>
+          <h2 class="section-title">Hecha por un entrenador, para entrenadores.</h2>
+          <p class="section-description">
+            San Cayetano nace de la experiencia real de Nano Peral, que necesitaba
+            un sistema sencillo, elegante y sin ruido para seguir la evolución de
+            sus deportistas. No es una herramienta genérica: está centrada en cómo
+            trabajas tú.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature-card">
+            <div class="feature-icon">□</div>
+            <h3 class="feature-title">Claridad total</h3>
+            <p class="feature-text">
+              Organiza semanas, bloques y sesiones con una estructura visual limpia,
+              para que tanto tú como tus deportistas entendáis el plan de un vistazo.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">↗</div>
+            <h3 class="feature-title">Control de la carga</h3>
+            <p class="feature-text">
+              Registra progresiones, ajustes y sensaciones con histórico accesible,
+              para tomar decisiones informadas en el momento adecuado.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">★</div>
+            <h3 class="feature-title">Imagen profesional</h3>
+            <p class="feature-text">
+              Ofreces un entorno digital moderno que refuerza tu marca personal y
+              transmite confianza desde el primer día de trabajo.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- SECTION: CÓMO FUNCIONA -->
+      <section class="section" id="como-funciona">
+        <div class="section-header">
+          <div class="section-kicker">En tu día a día</div>
+          <h2 class="section-title">De la libreta al entorno digital en 3 pasos.</h2>
+          <p class="section-description">
+            No necesitas cambiar tu forma de entrenar; solo llevas tu estructura a
+            un sistema que la ordena, la hace legible y la convierte en una
+            experiencia clara para tus deportistas.
+          </p>
+        </div>
+
+        <div class="steps">
+          <article class="step">
+            <div class="step-badge">1</div>
+            <h3 class="step-title">Crea o adapta tus planes</h3>
+            <p class="step-text">
+              Diseña semanas, bloques y objetivos de cada sesión sin pelearte con
+              hojas de cálculo infinitas ni notas sueltas.
+            </p>
+          </article>
+
+          <article class="step">
+            <div class="step-badge">2</div>
+            <h3 class="step-title">Comparte con tus deportistas</h3>
+            <p class="step-text">
+              Envía el acceso y permite que vean qué toca cada día, con espacio para
+              registrar lo que hacen y cómo se sienten.
+            </p>
+          </article>
+
+          <article class="step">
+            <div class="step-badge">3</div>
+            <h3 class="step-title">Analiza y ajusta</h3>
+            <p class="step-text">
+              Revisa seguimiento, detecta patrones y ajusta cargas con toda la
+              información ordenada y siempre disponible.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- SECTION: PARA QUIÉN ES -->
+      <section class="section">
+        <div class="section-header">
+          <div class="section-kicker">Perfil de usuario</div>
+          <h2 class="section-title">Si entrenas personas, San Cayetano es para ti.</h2>
+        </div>
+
+        <div class="audience">
+          <div class="audience-list">
+            <div class="audience-item">
+              <span class="audience-bullet"></span>
+              <span>
+                Entrenadores personales que trabajan online, presencial o híbrido y
+                necesitan una vista clara de cada deportista.
+              </span>
+            </div>
+            <div class="audience-item">
+              <span class="audience-bullet"></span>
+              <span>
+                Coaches de fuerza, hipertrofia o rendimiento que no quieren depender
+                de excels para seguir la carga.
+              </span>
+            </div>
+            <div class="audience-item">
+              <span class="audience-bullet"></span>
+              <span>
+                Preparadores físicos de clubes o centros que coordinan varios
+                deportistas y planes a la vez.
+              </span>
+            </div>
+            <div class="audience-item">
+              <span class="audience-bullet"></span>
+              <span>
+                Entrenadores que llevan grupos pequeños y quieren un control fino
+                sin perder tiempo en tareas repetitivas.
+              </span>
+            </div>
+          </div>
+
+          <div class="audience-note">
+            Si hoy usas hojas de cálculo, notas del móvil o PDFs para seguir a tus
+            deportistas, San Cayetano es el siguiente paso natural: mismo criterio,
+            mucha más claridad y orden.
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: CTA FINAL -->
+      <section class="section">
+        <div class="cta-final">
+          <div class="cta-final-text">
+            <h2 class="cta-final-title">
+              Da a tus deportistas la experiencia que tu trabajo merece.
+            </h2>
+            <p class="cta-final-sub">
+              Tu criterio ya marca la diferencia. Acompáñalo con una herramienta a
+              la altura para planificar, seguir y ajustar cada entrenamiento con
+              precisión.
+            </p>
+            <p class="cta-final-note">
+              San Cayetano es la app creada por Nano Peral para entrenadores que
+              quieren orden, claridad y una buena presentación.
+            </p>
+          </div>
+          <a
+            href="https://seguimiento-bice.vercel.app/"
+            class="btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Empezar a usar San Cayetano
+          </a>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        <span>© <span id="year"></span> San Cayetano · Nano Peral</span>
+        <span>Desplegado con infraestructura moderna en la nube.</span>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const y = new Date().getFullYear();
+    const el = document.getElementById("year");
+    if (el) el.textContent = y;
+  </script>
+</body>
+</html>
